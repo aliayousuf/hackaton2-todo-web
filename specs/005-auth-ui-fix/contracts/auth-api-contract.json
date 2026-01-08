@@ -1,0 +1,292 @@
+# Authentication API Contracts
+
+## Overview
+API contracts for the authentication system endpoints.
+
+## Registration Endpoint
+
+### POST /api/auth/register
+
+#### Description
+Registers a new user account with the provided credentials.
+
+#### Request
+- **Method**: POST
+- **Endpoint**: `/api/auth/register`
+- **Content-Type**: `application/json`
+
+##### Request Body
+```json
+{
+  "email": "string (required)",
+  "password": "string (required, min 8 characters)"
+}
+```
+
+**Request Body Schema**:
+```json
+{
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Valid email address"
+    },
+    "password": {
+      "type": "string",
+      "minLength": 8,
+      "description": "Password with minimum 8 characters"
+    }
+  },
+  "required": ["email", "password"]
+}
+```
+
+#### Responses
+
+##### 200 OK - Successful Registration
+```json
+{
+  "success": true,
+  "message": "User registered successfully",
+  "user": {
+    "id": "string",
+    "email": "string",
+    "created_at": "string (ISO 8601)",
+    "updated_at": "string (ISO 8601)"
+  }
+}
+```
+
+**Response Schema**:
+```json
+{
+  "type": "object",
+  "properties": {
+    "success": {
+      "type": "boolean",
+      "enum": [true]
+    },
+    "message": {
+      "type": "string"
+    },
+    "user": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["id", "email", "created_at", "updated_at"]
+    }
+  },
+  "required": ["success", "message", "user"]
+}
+```
+
+##### 400 Bad Request - Invalid Input
+```json
+{
+  "success": false,
+  "detail": "Error message describing the validation issue"
+}
+```
+
+##### 409 Conflict - User Already Exists
+```json
+{
+  "success": false,
+  "detail": "An account with this email already exists"
+}
+```
+
+## Login Endpoint
+
+### POST /api/auth/login
+
+#### Description
+Authenticates a user with their credentials and returns an access token.
+
+#### Request
+- **Method**: POST
+- **Endpoint**: `/api/auth/login`
+- **Content-Type**: `application/json`
+
+##### Request Body
+```json
+{
+  "email": "string (required)",
+  "password": "string (required)"
+}
+```
+
+**Request Body Schema**:
+```json
+{
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "password": {
+      "type": "string"
+    }
+  },
+  "required": ["email", "password"]
+}
+```
+
+#### Responses
+
+##### 200 OK - Successful Login
+```json
+{
+  "success": true,
+  "access_token": "string (JWT token)",
+  "token_type": "string (e.g., 'bearer')",
+  "user": {
+    "id": "string",
+    "email": "string",
+    "created_at": "string (ISO 8601)",
+    "updated_at": "string (ISO 8601)"
+  }
+}
+```
+
+**Response Schema**:
+```json
+{
+  "type": "object",
+  "properties": {
+    "success": {
+      "type": "boolean",
+      "enum": [true]
+    },
+    "access_token": {
+      "type": "string",
+      "description": "JWT access token"
+    },
+    "token_type": {
+      "type": "string",
+      "enum": ["bearer"]
+    },
+    "user": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["id", "email", "created_at", "updated_at"]
+    }
+  },
+  "required": ["success", "access_token", "token_type", "user"]
+}
+```
+
+##### 401 Unauthorized - Invalid Credentials
+```json
+{
+  "success": false,
+  "detail": "Invalid email or password"
+}
+```
+
+## Logout Endpoint
+
+### POST /api/auth/logout
+
+#### Description
+Logs out the current user (client-side token removal).
+
+#### Request
+- **Method**: POST
+- **Endpoint**: `/api/auth/logout`
+
+#### Responses
+
+##### 200 OK - Successful Logout
+```json
+{
+  "success": true,
+  "message": "Successfully logged out"
+}
+```
+
+**Response Schema**:
+```json
+{
+  "type": "object",
+  "properties": {
+    "success": {
+      "type": "boolean",
+      "enum": [true]
+    },
+    "message": {
+      "type": "string"
+    }
+  },
+  "required": ["success", "message"]
+}
+```
+
+## Authentication Headers
+
+For protected endpoints that require authentication:
+
+### Authorization Header
+```
+Authorization: Bearer {access_token}
+```
+
+Where `{access_token}` is the JWT token received from the login endpoint.
+
+## Error Response Format
+
+All error responses follow this format:
+```json
+{
+  "success": false,
+  "detail": "Descriptive error message"
+}
+```
+
+## Validation Rules
+
+### Email Format
+- Must conform to RFC 5322 standard
+- Example: `user@example.com`
+
+### Password Requirements
+- Minimum length: 8 characters
+- Should contain a mix of letters, numbers, and special characters (recommended)
+
+### Rate Limiting
+- Implement rate limiting to prevent brute-force attacks
+- Recommended: 5 attempts per minute per IP

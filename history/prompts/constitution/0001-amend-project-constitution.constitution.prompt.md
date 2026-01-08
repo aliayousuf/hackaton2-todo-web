@@ -1,17 +1,32 @@
-<!-- SYNC IMPACT REPORT
-Version change: N/A (initial version) → 1.0.0
-Modified principles: N/A
-Added sections: All sections from The Evolution of Todo constitution
-Removed sections: N/A
-Templates requiring updates:
-- .specify/templates/plan-template.md: ✅ updated
-- .specify/templates/spec-template.md: ✅ updated
-- .specify/templates/tasks-template.md: ✅ updated
-- .specify/templates/commands/*.md: ✅ updated
-Follow-up TODOs: None
--->
+---
+id: 1
+title: "Amend Project Constitution"
+stage: constitution
+date_iso: "2026-01-03"
+surface: "agent"
+model: "Claude Sonnet 4.5"
+feature: "none"
+branch: "master"
+user: "user"
+command: "/sp.constitution"
+labels: ["constitution", "governance", "setup"]
+links:
+  spec: null
+  ticket: null
+  adr: null
+  pr: null
+files_yaml: |
+  - .specify/memory/constitution.md
+tests_yaml: |
+  - null
+---
 
-# The Evolution of Todo Constitution
+# Amendment of Project Constitution
+
+## PROMPT_TEXT
+
+```
+The Evolution of Todo
 
 Preamble
 
@@ -514,7 +529,9 @@ Phase II Structure (Full-Stack Monorepo - MANDATORY):
 ├── .gitignore
 ├── README.md                         # Project overview and setup
 └── CLAUDE.md                         # Root AI agent instructions
-Enforcement: No alternative structures permitted. All new phases must follow this layout.V. Quality Standards (Global)
+Enforcement: No alternative structures permitted. All new phases must follow this layout.
+
+V. Quality Standards (Global)
 
 Specification quality: clear problem statement, user stories, edge cases, performance, security, success metrics
 
@@ -603,5 +620,8 @@ Amendment: requires ADR, justification, explicit approval
 Interpretation: guided by SDD and human-AI collaboration principles
 
 Non-compliance: work violating the Constitution must be rejected and regenerated
+```
 
-**Version**: 1.0.0 | **Ratified**: 2026-01-03 | **Last Amended**: 2026-01-03
+## RESPONSE_TEXT
+
+Updated the project constitution at `.specify/memory/constitution.md` with the complete "The Evolution of Todo" constitution document. The new constitution establishes governing principles for a multi-phase educational software project teaching modern software engineering through Spec-Driven Development (SDD) and AI-assisted implementation. It includes core principles for SDD workflow, AI as primary developer, mandatory traceability, test-first mandate, and evolutionary consistency. The document also covers domain model governance, technology governance standards for different phases, repository structure requirements, quality standards, security compliance, phase evolution rules, workflow enforcement, human-AI collaboration contract, academic integrity, versioning, and governance procedures. The constitution is version 1.0.0 and was ratified on 2026-01-03.
