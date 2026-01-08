@@ -89,7 +89,11 @@ export function RegisterForm({ onRegisterSuccess, onError, onRegister }: Registe
         setFormErrors(newErrors);
       } else {
         // Handle custom validation errors
-        setFormErrors({ confirmPassword: error.message });
+        if (typeof error === 'object' && error !== null && 'message' in error) {
+          setFormErrors({ confirmPassword: (error as { message: string }).message });
+        } else {
+          setFormErrors({ confirmPassword: String(error) });
+        }
       }
     }
   };
