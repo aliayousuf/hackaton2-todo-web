@@ -125,11 +125,12 @@ def login_user(
         expires_delta=access_token_expires
     )
 
-    # Set JWT as httpOnly cookie for security
+    # Return token in response body (client-side storage preferred for SPA)
+    # We'll still set the cookie for compatibility but prioritize response body
     response.set_cookie(
         key="access_token",
         value=f"Bearer {access_token}",
-        httponly=True,
+        httponly=False,  # Changed to False so JS can read if needed
         secure=False,  # Set to True in production with HTTPS
         samesite="lax",  # Prevents CSRF attacks
         max_age=7 * 24 * 60 * 60  # 7 days in seconds

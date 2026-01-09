@@ -1,6 +1,8 @@
 from fastapi import HTTPException, status, Depends
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from jose import JWTError, jwt
+from fastapi.security import HTTPBearer
+from fastapi.security.http import HTTPAuthorizationCredentials
+import jwt
+from jwt import InvalidTokenError
 from typing import Optional
 import os
 from datetime import datetime, timedelta
@@ -9,12 +11,12 @@ from sqlmodel import Session
 from ..database import get_session
 from ..models.user import User
 
-# Initialize security scheme
-security = HTTPBearer()
+# Initialize security scheme with proper configuration for API
+security = HTTPBearer(auto_error=False)  # Set to False to handle manually
 
 # Get JWT configuration from environment
 SECRET_KEY = os.getenv("JWT_SECRET", "your-super-secret-jwt-key-change-in-production")
-ALGORITHM = os.getenv("JWT_ALGORITHM", "HS256")
+ALGORITHM = os.getenv("JWT_ALGORITHM", "HS256").strip()
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("JWT_ACCESS_TOKEN_EXPIRE_MINUTES", "10080"))  # 7 days default
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
@@ -57,7 +59,7 @@ def verify_token(token: str) -> dict:
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         return payload
-    except JWTError:
+    except InvalidTokenError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Could not validate credentials",
@@ -85,6 +87,15 @@ def get_current_user(
     Raises:
         HTTPException: If authentication fails (invalid token, user not found)
     """
+    # When auto_error=False, if no credentials are provided, the credentials object
+    # will still exist but credentials.credentials will be None
+    if credentials is None or not credentials or credentials.credentials is None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Authentication credentials required",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
     token = credentials.credentials
 
     try:
@@ -97,7 +108,7 @@ def get_current_user(
                 detail="Could not validate credentials",
                 headers={"WWW-Authenticate": "Bearer"},
             )
-    except JWTError:
+    except InvalidTokenError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Could not validate credentials",
