@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .routers import auth, tasks
+from .routers import auth, tasks, chat
 import os
 
 def create_app():
@@ -13,7 +13,7 @@ def create_app():
     # CORS middleware
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=os.getenv("ALLOWED_ORIGINS", "https://hackaton2-todo-web.vercel.app,http://localhost:3000").split(","),
+        allow_origins=os.getenv("ALLOWED_ORIGIN", "https://hackaton2-todo-web.vercel.app,http://localhost:3000").split(","),
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
@@ -22,6 +22,7 @@ def create_app():
     # Include routers
     app.include_router(auth.router, prefix="/api", tags=["Authentication"])
     app.include_router(tasks.router, prefix="/api", tags=["Tasks"])
+    app.include_router(chat.router, prefix="/api", tags=["Chat"])
 
     @app.get("/")
     def read_root():

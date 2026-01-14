@@ -8,9 +8,9 @@ import { BottomSheet } from '@/components/ui/BottomSheet';
 import type { Task } from '@/types/task';
 import { getTasks, updateTaskPartial } from '@/lib/api';
 import { motion } from 'framer-motion';
-import { CheckCircle, Calendar, TrendingUp, FileText } from 'lucide-react';
+import { FileText } from 'lucide-react';
 
-export default function DashboardPage() {
+export default function TasksPage() {
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [showBottomSheet, setShowBottomSheet] = useState(false);
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -21,12 +21,6 @@ export default function DashboardPage() {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [stats, setStats] = useState({
-    totalTasks: 0,
-    completedTasks: 0,
-    overdueTasks: 0,
-    upcomingTasks: 0
-  });
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -35,18 +29,7 @@ export default function DashboardPage() {
         const response = await getTasks();
         if (response.success) {
           const tasksData = response.data || [];
-          setTasks(tasksData);
-
-          // Calculate stats
-          const completed = tasksData.filter(t => t.completed).length;
-          const total = tasksData.length;
-
-          setStats({
-            totalTasks: total,
-            completedTasks: completed,
-            overdueTasks: 0, // Calculate based on due dates if available
-            upcomingTasks: total - completed
-          });
+          setTasks(tasksData.filter(task => !task.completed)); // Only show incomplete tasks
         } else {
           setError(response.error || 'Failed to load tasks');
         }
@@ -64,13 +47,6 @@ export default function DashboardPage() {
     setTasks([newTask, ...tasks]);
     setShowCreateForm(false);
     setShowBottomSheet(false);
-
-    // Recalculate stats
-    setStats(prev => ({
-      ...prev,
-      totalTasks: prev.totalTasks + 1,
-      upcomingTasks: prev.upcomingTasks + 1
-    }));
   };
 
   const handleTaskUpdated = (updatedTask: Task) => {
@@ -79,17 +55,6 @@ export default function DashboardPage() {
 
   const handleTaskDeleted = (deletedTaskId: number) => {
     setTasks(tasks.filter(task => task.id !== deletedTaskId));
-
-    // Recalculate stats
-    const deletedTask = tasks.find(task => task.id === deletedTaskId);
-    if (deletedTask) {
-      setStats(prev => ({
-        ...prev,
-        totalTasks: prev.totalTasks - 1,
-        completedTasks: deletedTask.completed ? prev.completedTasks - 1 : prev.completedTasks,
-        upcomingTasks: !deletedTask.completed ? prev.upcomingTasks - 1 : prev.upcomingTasks
-      }));
-    }
   };
 
   const handleTaskToggle = async (taskId: number) => {
@@ -105,13 +70,6 @@ export default function DashboardPage() {
       const response = await updateTaskPartial(taskId, { completed: !task.completed });
       if (response.success && response.data) {
         setTasks(tasks.map(t => t.id === taskId ? response.data! : t));
-
-        // Recalculate stats
-        setStats(prev => ({
-          ...prev,
-          completedTasks: !task.completed ? prev.completedTasks + 1 : prev.completedTasks - 1,
-          upcomingTasks: !task.completed ? prev.upcomingTasks - 1 : prev.upcomingTasks + 1
-        }));
       }
     } catch (error) {
       console.error('Error toggling task completion:', error);
@@ -134,11 +92,11 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-[#0F172A]">
       <div className="max-w-7xl mx-auto">
-        {/* Dashboard Header */}
+        {/* Tasks Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 p-8">
           <div>
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-100 break-words">My Tasks</h1>
-            <p className="text-sm sm:text-base text-slate-400 mt-2 leading-relaxed break-words">Manage your tasks efficiently</p>
+            <p className="text-sm sm:text-base text-slate-400 mt-2 leading-relaxed break-words">Manage your active tasks efficiently</p>
           </div>
           <button
             onClick={handleCreateTask}
@@ -147,65 +105,6 @@ export default function DashboardPage() {
             <FileText className="h-4 w-4" />
             <span>Create Task</span>
           </button>
-        </div>
-
-        {/* Bento Stats Grid - 4-column layout */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-8">
-          {/* Total Tasks Card */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.1 }}
-            className="glass-card p-6 flex flex-col items-center justify-center text-center"
-          >
-            <div className="p-3 bg-indigo-500 bg-opacity-20 rounded-xl mb-3">
-              <FileText className="h-6 w-6 text-indigo-400" />
-            </div>
-            <h3 className="text-base font-medium text-slate-400 mb-2">Total</h3>
-            <p className="text-3xl font-bold text-indigo-400">{stats.totalTasks}</p>
-          </motion.div>
-
-          {/* Completed Tasks Card */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2 }}
-            className="glass-card p-6 flex flex-col items-center justify-center text-center"
-          >
-            <div className="p-3 bg-green-500 bg-opacity-20 rounded-xl mb-3">
-              <CheckCircle className="h-6 w-6 text-green-400" />
-            </div>
-            <h3 className="text-base font-medium text-slate-400 mb-2">Completed</h3>
-            <p className="text-3xl font-bold text-green-400">{stats.completedTasks}</p>
-          </motion.div>
-
-          {/* Overdue Tasks Card */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3 }}
-            className="glass-card p-6 flex flex-col items-center justify-center text-center"
-          >
-            <div className="p-3 bg-red-500 bg-opacity-20 rounded-xl mb-3">
-              <Calendar className="h-6 w-6 text-red-400" />
-            </div>
-            <h3 className="text-base font-medium text-slate-400 mb-2">Overdue</h3>
-            <p className="text-3xl font-bold text-red-400">{stats.overdueTasks}</p>
-          </motion.div>
-
-          {/* Upcoming Tasks Card */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.4 }}
-            className="glass-card p-6 flex flex-col items-center justify-center text-center"
-          >
-            <div className="p-3 bg-blue-500 bg-opacity-20 rounded-xl mb-3">
-              <TrendingUp className="h-6 w-6 text-blue-400" />
-            </div>
-            <h3 className="text-base font-medium text-slate-400 mb-2">Upcoming</h3>
-            <p className="text-3xl font-bold text-blue-400">{stats.upcomingTasks}</p>
-          </motion.div>
         </div>
 
         {/* Task List */}

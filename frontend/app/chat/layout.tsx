@@ -6,19 +6,19 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import ResponsiveLayout from '@/components/layout/ResponsiveLayout';
 
-interface DashboardLayoutProps {
+interface ChatLayoutProps {
   children: ReactNode;
 }
 
-export default function DashboardLayout({ children }: DashboardLayoutProps) {
-  const { user, loading, isAuthenticated } = useAuth();
+export default function ChatLayout({ children }: ChatLayoutProps) {
+  const { user, loading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (!loading && !isAuthenticated) {
+    if (!loading && !user) {
       router.push('/login');
     }
-  }, [isAuthenticated, loading, router]);
+  }, [user, loading, router]);
 
   if (loading) {
     return (
@@ -28,12 +28,12 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     );
   }
 
-  if (!isAuthenticated) {
+  if (!user) {
     return null; // Redirect happens in useEffect
   }
 
   return (
-    <ResponsiveLayout title="Dashboard">
+    <ResponsiveLayout title="AI Chat">
       {children}
     </ResponsiveLayout>
   );

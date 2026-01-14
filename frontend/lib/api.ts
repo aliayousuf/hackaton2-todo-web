@@ -7,7 +7,7 @@ import type { Task } from '@/types/task';
 import type { User } from '@/types/user';
 
 // Base API URL from environment
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
 // Default headers for API requests
 const DEFAULT_HEADERS = {

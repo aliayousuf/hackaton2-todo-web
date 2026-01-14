@@ -3,26 +3,97 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 55, 65, 81; /* gray-700 */
-  --background-rgb: 255, 255, 255; /* white - light workspace */
-  --primary-rgb: 219, 39, 119; /* pink-500 */
-  --primary-600-rgb: 190, 24, 93; /* pink-600 */
+  --foreground-rgb: 248, 250, 252; /* slate-50 */
+  --background-rgb: 15, 23, 42; /* #0F172A - Deep Charcoal */
+  --primary-rgb: 99, 102, 241; /* indigo-500 */
+  --primary-600-rgb: 79, 70, 229; /* indigo-600 */
   --secondary-rgb: 16, 185, 129; /* green-500 */
-  --accent-rgb: 251, 207, 232; /* pink-200 */
-  --card-bg-rgb: 255, 255, 255; /* white cards */
-  --border-rgb: 252, 231, 243; /* pink-100 */
-  /* Pink SaaS Color Variables */
-  --pink-50: 253, 242, 248; /* pink-50 as RGB */
-  --pink-500: 219, 39, 119; /* pink-500 as RGB */
-  --pink-600: 190, 24, 93; /* pink-600 as RGB */
-  --pink-900: 131, 24, 67; /* pink-900 as RGB */
-  --gradient-pink-rose: linear-gradient(90deg, rgb(219, 39, 119), rgb(251, 113, 133)); /* bg-gradient-to-r from-pink-500 to-rose-400 */
+  --accent-rgb: 139, 92, 246; /* violet-500 */
+  --card-bg-rgb: 30, 41, 59; /* slate-800/50 */
+  --border-rgb: 74, 85, 103; /* slate-500/20 */
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
 body {
+  background-color: #0F172A;
+  overflow-x: hidden;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
   color: rgb(var(--foreground-rgb));
-  background-color: rgb(var(--background-rgb));
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: #0F172A !important; /* Midnight background */
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  transition: all 300ms ease;
+}
+
+/* Additional glassmorphism styles */
+.glass-container {
+  background-color: #1e293b4d;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.75rem;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Required CSS utilities */
+.action-icon {
+  color: #e2e8f0; /* text-slate-100 */
+  background-color: rgba(30, 41, 59, 0.5); /* bg-slate-800/50 */
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.2s ease;
+}
+
+.action-icon:hover {
+  background-color: #4f46e5; /* hover:bg-indigo-600 */
+}
+
+/* Ensure all text defaults to proper contrast */
+* {
+  color: #ffffff; /* primary text to #FFFFFF */
+}
+
+/* Text contrast fixes */
+h1, h2, h3, h4, .text-title {
+  color: #f8fafc !important; /* text-slate-50 */
+}
+
+.text-subtitle, .subtitle, small, .text-muted, p {
+  color: #94a3b8 !important; /* text-slate-400 */
+}
+
+/* Override for specific elements that need different colors */
+.text-primary {
+  color: #f8fafc; /* slate-50 */
+}
+
+.text-secondary {
+  color: #cbd5e1; /* slate-300 */
+}
+
+.text-muted {
+  color: #94a3b8; /* slate-400 */
+}
+
+/* Focus styles for accessibility */
+*:focus {
+  outline: 2px solid #818cf8; /* indigo-400 */
+  outline-offset: 2px;
 }
 
 @layer base {
@@ -51,12 +122,12 @@ body {
 
   p {
     font-size: 1rem; /* text-base */
-    color: #4b5563; /* text-gray-600 */
+    color: #94a3b8; /* text-slate-400 */
   }
 
   small {
     font-size: 0.875rem; /* text-sm */
-    color: #6b7280; /* text-gray-500 */
+    color: #94a3b8; /* text-slate-400 */
   }
 }
 

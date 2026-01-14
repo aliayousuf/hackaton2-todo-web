@@ -1,7 +1,10 @@
-from sqlmodel import SQLModel, Field
-from typing import Optional
+from sqlmodel import SQLModel, Field, Relationship
+from typing import Optional, TYPE_CHECKING
 from datetime import datetime
 import uuid
+
+if TYPE_CHECKING:
+    from .conversation import Conversation
 
 class User(SQLModel, table=True):
     __tablename__ = "users"
@@ -23,6 +26,9 @@ class User(SQLModel, table=True):
 
     def __repr__(self):
         return f"<User(id={self.id}, email='{self.email}')>"
+
+    # Relationship
+    conversations: list["Conversation"] = Relationship(back_populates="user")
 
     def __str__(self):
         return f"User(email={self.email})"

@@ -6,6 +6,11 @@ from typing import Generator
 from contextlib import contextmanager
 from dotenv import load_dotenv
 
+# Import models to ensure they are registered with SQLModel
+from .models import user, task
+from .models.conversation import Conversation
+from .models.message import Message
+
 # Load environment variables from .env file
 load_dotenv()
 
@@ -51,6 +56,18 @@ def get_db_session():
         session.close()
 
 # Optional: Add connection event listeners for monitoring
+def create_db_and_tables():
+    """Create all database tables."""
+    from .models.user import User
+    from .models.task import Task
+    from .models.conversation import Conversation
+    from .models.message import Message
+    from sqlmodel import SQLModel
+
+    SQLModel.metadata.create_all(bind=engine)
+    print("Database tables created successfully!")
+
+
 @event.listens_for(engine, "connect")
 def set_sqlite_pragma(dbapi_connection, connection_record):
     """Set database-specific pragmas when connecting."""

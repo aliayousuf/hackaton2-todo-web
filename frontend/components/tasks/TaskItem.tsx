@@ -70,7 +70,7 @@ export function TaskItem({ task, onUpdate, onDelete }: TaskItemProps) {
   };
 
   return (
-    <div className={`${task.completed ? 'bg-pink-50 text-pink-600' : 'bg-white'} rounded-2xl shadow-sm border border-slate-100 p-6 mb-4 hover:border-pink-200`}>
+    <div className="glass-card p-5 rounded-2xl backdrop-blur-md border border-white/10 shadow-xl mb-4">
       {task.completed && (
         <div className="absolute top-3 right-3 z-10">
           <span className="inline-flex items-center rounded-full bg-pink-100 px-2.5 py-0.5 text-xs font-medium text-pink-700">
@@ -79,109 +79,109 @@ export function TaskItem({ task, onUpdate, onDelete }: TaskItemProps) {
         </div>
       )}
 
-      <div className="flex items-start gap-4 flex-1 min-w-0">
-        <div className="flex-shrink-0 pt-1">
-          <input
-            type="checkbox"
-            checked={task.completed}
-            onChange={toggleCompletion}
-            disabled={loading}
-            className="h-5 w-5 rounded border-gray-300 text-pink-500 focus:ring-pink-500"
-          />
-        </div>
+      <div className="flex justify-between items-center p-4">
+        <div className="flex items-start gap-4 flex-1 min-w-0">
+          <div className="flex-shrink-0 pt-1">
+            <input
+              type="checkbox"
+              checked={task.completed}
+              onChange={toggleCompletion}
+              disabled={loading}
+              className="h-5 w-5 rounded border-gray-300 text-pink-500 focus:ring-pink-500"
+            />
+          </div>
 
-        <div className="flex-1 min-w-0">
-          {isEditing ? (
-            <div className="space-y-3">
-              <input
-                type="text"
-                value={editTitle}
-                onChange={(e) => setEditTitle(e.target.value)}
-                className="input-base w-full text-lg font-medium"
-                placeholder="Task title..."
-              />
-              <textarea
-                value={editDescription}
-                onChange={(e) => setEditDescription(e.target.value)}
-                className="input-base w-full"
-                rows={3}
-                placeholder="Task description..."
-              />
-            </div>
-          ) : (
-            <div className="space-y-1">
-              <h3 className={`text-lg font-medium break-words ${task.completed ? 'text-indigo-600 line-through' : 'text-gray-900'}`}>
-                {task.title}
-              </h3>
-              {task.description && (
-                <p className={`text-base break-words ${task.completed ? 'text-indigo-400' : 'text-gray-600'}`}>
-                  {task.description}
-                </p>
-              )}
-            </div>
-          )}
-
-          <div className="mt-3 flex flex-wrap gap-3 text-xs text-gray-400">
-            <div className="flex items-center gap-1">
-              <span className="font-normal">Created:</span>
-              <span>{new Date(task.created_at).toLocaleDateString()}</span>
-            </div>
-            {task.updated_at !== task.created_at && (
-              <div className="flex items-center gap-1">
-                <span className="font-normal">Updated:</span>
-                <span>{new Date(task.updated_at).toLocaleDateString()}</span>
+          <div className="flex-1 min-w-0" style={{ maxWidth: '60%' }}>
+            {isEditing ? (
+              <div className="space-y-3">
+                <input
+                  type="text"
+                  value={editTitle}
+                  onChange={(e) => setEditTitle(e.target.value)}
+                  className="input-base w-full text-lg font-medium text-slate-50"
+                  placeholder="Task title..."
+                />
+                <textarea
+                  value={editDescription}
+                  onChange={(e) => setEditDescription(e.target.value)}
+                  className="input-base w-full text-slate-400"
+                  rows={3}
+                  placeholder="Task description..."
+                />
+              </div>
+            ) : (
+              <div className="space-y-1">
+                <h3 className={`text-lg font-medium truncate ${task.completed ? 'text-slate-400 line-through' : 'text-slate-50'}`}>
+                  {task.title}
+                </h3>
+                {task.description && (
+                  <p className={`text-base break-words ${task.completed ? 'text-slate-400' : 'text-slate-400'}`}>
+                    {task.description}
+                  </p>
+                )}
               </div>
             )}
+
+            <div className="mt-3 flex flex-wrap gap-3 text-xs text-slate-400">
+              <div className="flex items-center gap-1">
+                <span className="font-normal">Created:</span>
+                <span>{new Date(task.created_at).toLocaleDateString()}</span>
+              </div>
+              {task.updated_at !== task.created_at && (
+                <div className="flex items-center gap-1">
+                  <span className="font-normal">Updated:</span>
+                  <span>{new Date(task.updated_at).toLocaleDateString()}</span>
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="flex items-center gap-2 ml-4 flex-shrink-0">
-        {isEditing ? (
-          <>
-            <button
-              onClick={handleSaveEdit}
-              disabled={loading}
-              className="btn-primary flex items-center gap-1 px-3 py-1.5 text-sm"
-            >
-              <CheckIcon className="h-4 w-4" />
-              <span>Save</span>
-            </button>
-            <button
-              onClick={() => {
-                setIsEditing(false);
-                setEditTitle(task.title);
-                setEditDescription(task.description || '');
-              }}
-              disabled={loading}
-              className="btn-secondary flex items-center gap-1 px-3 py-1.5 text-sm"
-            >
-              <XCircleIcon className="h-4 w-4" />
-              <span>Cancel</span>
-            </button>
-          </>
-        ) : (
-          <>
-            <button
-              onClick={() => setIsEditing(true)}
-              disabled={loading}
-              className="btn-secondary flex items-center gap-1 px-3 py-1.5 text-sm"
-              title="Edit task"
-            >
-              <PencilIcon className="h-4 w-4" />
-              <span className="sr-only sm:not-sr-only">Edit</span>
-            </button>
-            <button
-              onClick={handleDelete}
-              disabled={loading || isDeleting}
-              className="btn-destructive flex items-center gap-1 px-3 py-1.5 text-sm"
-              title="Delete task"
-            >
-              <TrashIcon className="h-4 w-4" />
-              <span className="sr-only sm:not-sr-only">Delete</span>
-            </button>
-          </>
-        )}
+        <div className="flex items-center gap-2 ml-4 flex-shrink-0">
+          {isEditing ? (
+            <div className="flex gap-2">
+              <button
+                onClick={handleSaveEdit}
+                disabled={loading}
+                className="flex items-center gap-1 px-3 py-1.5 text-sm bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+              >
+                <CheckIcon className="h-4 w-4" />
+                <span>Save</span>
+              </button>
+              <button
+                onClick={() => {
+                  setIsEditing(false);
+                  setEditTitle(task.title);
+                  setEditDescription(task.description || '');
+                }}
+                disabled={loading}
+                className="flex items-center gap-1 px-3 py-1.5 text-sm bg-slate-600 text-white rounded-lg hover:bg-slate-700 transition-colors"
+              >
+                <XCircleIcon className="h-4 w-4" />
+                <span>Cancel</span>
+              </button>
+            </div>
+          ) : (
+            <div className="flex gap-2">
+              <button
+                onClick={() => setIsEditing(true)}
+                disabled={loading}
+                className="bg-slate-700/50 p-2 rounded-md text-white border border-white/10 hover:bg-indigo-600 transition-colors"
+                title="Edit task"
+              >
+                <PencilIcon className="h-4 w-4" />
+              </button>
+              <button
+                onClick={handleDelete}
+                disabled={loading || isDeleting}
+                className="bg-slate-700/50 p-2 rounded-md text-white border border-white/10 hover:bg-indigo-600 transition-colors"
+                title="Delete task"
+              >
+                <TrashIcon className="h-4 w-4" />
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

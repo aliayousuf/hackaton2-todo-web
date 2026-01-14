@@ -63,20 +63,20 @@ export default {
           950: '#450a0a',
         },
         background: {
-          DEFAULT: '#f8fafc', // slate-50
-          light: '#f3f4f6',
-          card: '#ffffff',
+          DEFAULT: '#0f172a', // midnight theme
+          light: '#1e293b',
+          card: '#1e293b',
         },
         text: {
-          primary: '#111827',
-          secondary: '#6B7280',
-          muted: '#9CA3AF',
-          disabled: '#D1D5DB',
+          primary: '#f8fafc', // white
+          secondary: '#cbd5e1', // slate-200
+          muted: '#94a3b8', // slate-400
+          disabled: '#64748b', // slate-500
         },
         border: {
-          DEFAULT: '#E5E7EB',
-          light: '#F3F4F6',
-          dark: '#D1D5DB',
+          DEFAULT: '#334155', // slate-700
+          light: '#475569', // slate-600
+          dark: '#1e293b', // slate-800
         },
         accent: {
           50: '#f0f9ff',
@@ -90,6 +90,33 @@ export default {
           800: '#075985',
           900: '#0c4a6e',
           950: '#082f49',
+        },
+        // Midnight & Electric theme
+        'midnight': {
+          50: '#f8fafc',
+          100: '#f1f5f9',
+          200: '#e2e8f0',
+          300: '#cbd5e1',
+          400: '#94a3b8',
+          500: '#64748b',
+          600: '#475569',
+          700: '#334155',
+          800: '#1e293b',
+          900: '#0f172a',
+          950: '#020617',
+        },
+        'electric': {
+          50: '#eef2ff',
+          100: '#e0e7ff',
+          200: '#c7d2fe',
+          300: '#a5b4fc',
+          400: '#818cf8',
+          500: '#6366f1',
+          600: '#4f46e5',
+          700: '#4338ca',
+          800: '#3730a3',
+          900: '#312e81',
+          950: '#1e1b4b',
         },
         // Brand Colors
         brandBlue: {
@@ -170,6 +197,7 @@ export default {
         'md': '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
         'lg': '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
         'xl': '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)',
+        'glass': 'rgba(255, 255, 255, 0.1) 0px 0px 10px, inset rgba(255, 255, 255, 0.2) 0px 0px 10px',
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
