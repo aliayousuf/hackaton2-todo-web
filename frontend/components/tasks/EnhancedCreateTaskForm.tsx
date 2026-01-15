@@ -74,7 +74,7 @@ export function EnhancedCreateTaskForm({ onTaskCreated, onError }: EnhancedCreat
       exit={{ opacity: 0, y: -20 }}
     >
       <div>
-        <label htmlFor="title" className="block text-sm font-medium text-slate-300 mb-2">
+        <label htmlFor="title" className="block text-sm font-medium text-green-300 mb-2">
           Title *
         </label>
         <Input
@@ -96,7 +96,7 @@ export function EnhancedCreateTaskForm({ onTaskCreated, onError }: EnhancedCreat
       </div>
 
       <div>
-        <label htmlFor="description" className="block text-sm font-medium text-slate-300 mb-2">
+        <label htmlFor="description" className="block text-sm font-medium text-green-300 mb-2">
           Description
         </label>
         <Textarea
@@ -120,7 +120,7 @@ export function EnhancedCreateTaskForm({ onTaskCreated, onError }: EnhancedCreat
 
       <motion.button
         type="submit"
-        className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 px-4 rounded-lg text-sm font-medium transition-colors flex items-center justify-center gap-2"
+        className="w-full bg-indigo-600 hover:bg-indigo-700 text-black py-2.5 px-4 rounded-lg text-sm font-medium transition-colors flex items-center justify-center gap-2"
         disabled={isLoading}
         whileHover={{ scale: isLoading ? 1 : 1.02 }}
         whileTap={{ scale: isLoading ? 1 : 0.98 }}

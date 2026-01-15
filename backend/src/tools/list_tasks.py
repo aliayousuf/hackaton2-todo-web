@@ -17,10 +17,11 @@ def list_tasks_tool(user_id: str, filter: str = "all") -> Dict[str, Any]:
         Dictionary with success status, tasks list, and message
     """
     try:
+        from ..database import get_db_session
         # Validate user_id format
         UUID(user_id)  # This will raise ValueError if invalid
 
-        with get_session() as session:
+        with get_db_session() as session:
             # Build query based on filter
             query = select(Task).where(Task.user_id == user_id)
 

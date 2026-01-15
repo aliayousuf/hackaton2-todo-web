@@ -28,9 +28,7 @@ export function RegisterForm({ onRegisterSuccess, onError, onRegister }: Registe
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -39,11 +37,6 @@ export function RegisterForm({ onRegisterSuccess, onError, onRegister }: Registe
     // Validate using Zod schema
     try {
       registerSchema.parse({ email, password });
-
-      // Validate additional custom rules
-      if (password !== confirmPassword) {
-        throw new Error('Passwords do not match');
-      }
 
       // Clear any field errors before submitting
       setFormErrors(prev => ({ general: prev.general }));
@@ -87,13 +80,6 @@ export function RegisterForm({ onRegisterSuccess, onError, onRegister }: Registe
           }
         });
         setFormErrors(newErrors);
-      } else {
-        // Handle custom validation errors
-        if (typeof error === 'object' && error !== null && 'message' in error) {
-          setFormErrors({ confirmPassword: (error as { message: string }).message });
-        } else {
-          setFormErrors({ confirmPassword: String(error) });
-        }
       }
     }
   };
@@ -113,7 +99,7 @@ export function RegisterForm({ onRegisterSuccess, onError, onRegister }: Registe
         )}
 
         <div>
-          <label htmlFor="email" className="block text-sm font-semibold text-slate-500 mb-2">
+          <label htmlFor="email" className="block text-sm font-semibold text-white mb-2">
             Email
           </label>
           <input
@@ -122,7 +108,7 @@ export function RegisterForm({ onRegisterSuccess, onError, onRegister }: Registe
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full border border-gray-200 rounded-xl px-5 py-4 mb-6 text-lg focus:ring-2 focus:ring-[#0a0a3c] outline-none text-slate-900 !bg-white"
+            className="w-full border border-slate-700 rounded-xl px-5 py-4 mb-6 text-lg focus:ring-2 focus:ring-indigo-500 outline-none text-white bg-slate-900"
             disabled={isLoading}
             placeholder="Email"
             aria-invalid={!!formErrors.email}
@@ -136,7 +122,7 @@ export function RegisterForm({ onRegisterSuccess, onError, onRegister }: Registe
         </div>
 
         <div>
-          <label htmlFor="password" className="block text-sm font-semibold text-slate-500 mb-2">
+          <label htmlFor="password" className="block text-sm font-semibold text-white mb-2">
             Password
           </label>
           <div className="relative">
@@ -146,7 +132,7 @@ export function RegisterForm({ onRegisterSuccess, onError, onRegister }: Registe
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full border border-gray-200 rounded-xl px-5 py-4 mb-6 text-lg focus:ring-2 focus:ring-[#0a0a3c] outline-none text-slate-900 !bg-white"
+              className="w-full border border-slate-700 rounded-xl px-5 py-4 mb-6 text-lg focus:ring-2 focus:ring-indigo-500 outline-none text-white bg-slate-900"
               disabled={isLoading}
               placeholder="Create password"
               aria-invalid={!!formErrors.password}
@@ -159,9 +145,9 @@ export function RegisterForm({ onRegisterSuccess, onError, onRegister }: Registe
               aria-label={showPassword ? "Hide password" : "Show password"}
             >
               {showPassword ? (
-                <EyeOffIcon className="h-5 w-5 text-gray-500" />
+                <EyeOffIcon className="h-5 w-5 text-gray-400" />
               ) : (
-                <EyeIcon className="h-5 w-5 text-gray-500" />
+                <EyeIcon className="h-5 w-5 text-gray-400" />
               )}
             </button>
           </div>
@@ -172,46 +158,10 @@ export function RegisterForm({ onRegisterSuccess, onError, onRegister }: Registe
           )}
         </div>
 
-        <div>
-          <label htmlFor="confirmPassword" className="block text-sm font-semibold text-slate-500 mb-2">
-            Confirm Password
-          </label>
-          <div className="relative">
-            <input
-              id="confirmPassword"
-              name="confirmPassword"
-              type={showConfirmPassword ? "text" : "password"}
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full border border-gray-200 rounded-xl px-5 py-4 mb-6 text-lg focus:ring-2 focus:ring-[#0a0a3c] outline-none text-slate-900 !bg-white"
-              disabled={isLoading}
-              placeholder="Confirm password"
-              aria-invalid={!!formErrors.confirmPassword}
-              aria-describedby={formErrors.confirmPassword ? "confirm-password-error" : undefined}
-            />
-            <button
-              type="button"
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute inset-y-0 right-0 pr-3 flex items-center"
-              aria-label={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}
-            >
-              {showConfirmPassword ? (
-                <EyeOffIcon className="h-5 w-5 text-gray-500" />
-              ) : (
-                <EyeIcon className="h-5 w-5 text-gray-500" />
-              )}
-            </button>
-          </div>
-          {formErrors.confirmPassword && (
-            <p id="confirm-password-error" className="mt-1 text-sm text-red-500">
-              {formErrors.confirmPassword}
-            </p>
-          )}
-        </div>
 
         <button
           type="submit"
-          className="w-full bg-[#0a0a3c] text-white !text-white py-5 rounded-xl text-xl font-bold mt-4 shadow-2xl hover:bg-slate-800 transition-all flex items-center justify-center border-none"
+          className="w-full bg-indigo-600 text-white py-5 rounded-xl text-xl font-bold mt-10 shadow-2xl hover:bg-indigo-700 transition-all flex items-center justify-center border-none"
           disabled={isLoading}
         >
           {isLoading ? 'Creating account...' : 'SIGNUP'}

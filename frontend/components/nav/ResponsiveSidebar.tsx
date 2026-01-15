@@ -29,7 +29,7 @@ export default function ResponsiveSidebar() {
       <div className="p-6 border-b border-white/10">
         <Link href="/dashboard" className="flex items-center space-x-3">
           <div className="w-8 h-8 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">T</span>
+
           </div>
           <span className="text-xl font-bold text-slate-50">Todo App</span>
         </Link>
@@ -58,21 +58,11 @@ export default function ResponsiveSidebar() {
         })}
       </nav>
 
-      <div className="p-4 border-t border-white/10">
-        <Link
-          href="/dashboard/tasks/new"
-          className="flex items-center space-x-3 px-4 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
-        >
-          <Plus className="h-5 w-5" />
-          <span className="font-medium">Create Task</span>
-        </Link>
-      </div>
-
-      {/* Logout button wrapped in div with mt-auto pb-8 to lock to bottom */}
-      <div className="mt-auto pb-8 px-4">
+      {/* Logout button container with proper spacing at bottom */}
+      <div className="px-4 pb-4 mt-auto">
         <button
           onClick={handleLogout}
-          className="bg-red-600 text-white hover:bg-red-700 px-4 py-3 rounded-xl w-full font-bold shadow-lg transition-colors"
+          className="bg-slate-800 text-white hover:bg-slate-700 px-4 py-3 rounded-xl w-full font-bold shadow-lg transition-colors"
         >
           Logout
         </button>

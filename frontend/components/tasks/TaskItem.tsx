@@ -143,9 +143,9 @@ export function TaskItem({ task, onUpdate, onDelete }: TaskItemProps) {
               <button
                 onClick={handleSaveEdit}
                 disabled={loading}
-                className="flex items-center gap-1 px-3 py-1.5 text-sm bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+                className="flex items-center gap-1 px-3 py-1.5 text-sm bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors"
               >
-                <CheckIcon className="h-4 w-4" />
+                <CheckIcon className="h-5 w-5" />
                 <span>Save</span>
               </button>
               <button
@@ -155,29 +155,29 @@ export function TaskItem({ task, onUpdate, onDelete }: TaskItemProps) {
                   setEditDescription(task.description || '');
                 }}
                 disabled={loading}
-                className="flex items-center gap-1 px-3 py-1.5 text-sm bg-slate-600 text-white rounded-lg hover:bg-slate-700 transition-colors"
+                className="flex items-center gap-1 px-3 py-1.5 text-sm bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors"
               >
-                <XCircleIcon className="h-4 w-4" />
+                <XCircleIcon className="h-5 w-5" />
                 <span>Cancel</span>
               </button>
             </div>
           ) : (
-            <div className="flex gap-2">
+            <div className="flex gap-2 bg-slate-800/50 p-2 rounded-lg">
               <button
                 onClick={() => setIsEditing(true)}
                 disabled={loading}
-                className="bg-slate-700/50 p-2 rounded-md text-white border border-white/10 hover:bg-indigo-600 transition-colors"
+                className="bg-slate-800 p-2 rounded-md text-white border border-white/10 hover:bg-indigo-600 transition-colors"
                 title="Edit task"
               >
-                <PencilIcon className="h-4 w-4" />
+                <PencilIcon className="h-5 w-5" />
               </button>
               <button
                 onClick={handleDelete}
                 disabled={loading || isDeleting}
-                className="bg-slate-700/50 p-2 rounded-md text-white border border-white/10 hover:bg-indigo-600 transition-colors"
+                className="bg-slate-800 p-2 rounded-md text-white border border-white/10 hover:bg-indigo-600 transition-colors"
                 title="Delete task"
               >
-                <TrashIcon className="h-4 w-4" />
+                <TrashIcon className="h-5 w-5" />
               </button>
             </div>
           )}

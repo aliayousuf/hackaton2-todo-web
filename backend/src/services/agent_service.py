@@ -11,22 +11,17 @@ from ..tools.delete_task import delete_task_tool
 
 class AgentService:
     def __init__(self):
-        # Try OpenAI first
-        api_key = os.getenv("OPENAI_API_KEY")
-        if api_key:
-            self.client = OpenAI(api_key=api_key)
+        # Use Google Gemini API directly (as requested)
+        google_api_key = os.getenv("GOOGLE_API_KEY")
+        if google_api_key:
+            # Configure OpenAI client to use Google's Gemini API endpoint
+            self.client = OpenAI(
+                api_key=google_api_key,
+                base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
+            )
         else:
-            # Try Google Gemini through OpenAI-compatible endpoint
-            google_api_key = os.getenv("GOOGLE_API_KEY")
-            if google_api_key:
-                # Configure OpenAI client to use Google's Gemini API endpoint
-                self.client = OpenAI(
-                    api_key=google_api_key,
-                    base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
-                )
-            else:
-                print("Warning: No API key found. AI functionality will be limited.")
-                self.client = None
+            print("Warning: No Google API key found. AI functionality will be limited.")
+            self.client = None
 
         # Register MCP tools
         self.tools_map = {
@@ -75,7 +70,7 @@ class AgentService:
             # Add the current user message
             messages.append({"role": "user", "content": message})
 
-            # Define the tools that the agent can use
+            # Define the tools that the agent can use - simplified for Google Gemini compatibility
             tools = [
                 {
                     "type": "function",
@@ -163,66 +158,88 @@ class AgentService:
                 }
             ]
 
-            # Call the OpenAI API with tools
-            response = self.client.chat.completions.create(
-                model="gemini-2.5-flash",  # Using gemini-2.5-flash for Google API
-                messages=messages,
-                tools=tools,
-                tool_choice="auto"
-            )
-
-            response_message = response.choices[0].message
-            tool_calls = response_message.tool_calls
-
-            # Process tool calls if any
-            tool_call_results = []
-            if tool_calls:
-                for tool_call in tool_calls:
-                    function_name = tool_call.function.name
-                    function_args = json.loads(tool_call.function.arguments)
-
-                    # Add user_id to the function args if not already present
-                    if "user_id" not in function_args:
-                        function_args["user_id"] = user_id
-
-                    # Execute the tool
-                    if function_name in self.tools_map:
-                        result = self.tools_map[function_name](**function_args)
-                        tool_call_results.append({
-                            "name": function_name,
-                            "arguments": function_args,
-                            "result": result
-                        })
-
-            # Generate final response based on tool results
-            if tool_call_results:
-                # If there were tool calls, get a final response from the model incorporating the results
-                final_messages = messages + [
-                    {"role": "assistant", "content": response_message.content or ""},
-                ]
-
-                for result in tool_call_results:
-                    final_messages.append({
-                        "role": "tool",
-                        "content": str(result["result"]),
-                        "name": result["name"]
-                    })
-
-                final_response = self.client.chat.completions.create(
+            # Attempt to call the Google Gemini API with tools
+            try:
+                response = self.client.chat.completions.create(
                     model="gemini-2.5-flash",
-                    messages=final_messages
+                    messages=messages,
+                    tools=tools,
+                    tool_choice="auto"
                 )
 
-                final_content = final_response.choices[0].message.content
-            else:
-                # If no tool calls, use the original response
-                final_content = response_message.content
+                response_message = response.choices[0].message
+                tool_calls = response_message.tool_calls
 
-            return {
-                "response": final_content or "I processed your request.",
-                "tool_calls": tool_call_results
-            }
+                # Process tool calls if any
+                tool_call_results = []
+                if tool_calls:
+                    for tool_call in tool_calls:
+                        function_name = tool_call.function.name
+                        function_args = json.loads(tool_call.function.arguments)
+
+                        # Add user_id to the function args if not already present
+                        if "user_id" not in function_args:
+                            function_args["user_id"] = user_id
+
+                        # Execute the tool
+                        if function_name in self.tools_map:
+                            result = self.tools_map[function_name](**function_args)
+                            tool_call_results.append({
+                                "name": function_name,
+                                "arguments": function_args,
+                                "result": result
+                            })
+
+                # Generate final response based on tool results
+                if tool_call_results:
+                    # If there were tool calls, process the results and create an appropriate response
+                    # Google Gemini API may not support the "tool" role, so we'll construct a response differently
+
+                    # Format the tool results for the user
+                    tool_results_text = ""
+                    for result in tool_call_results:
+                        tool_results_text += f"\nResult from {result['name']}: {result['result']}\n"
+
+                    # Combine the original response with the tool results
+                    original_response = response_message.content or ""
+                    final_content = original_response + "\n\n" + tool_results_text
+                else:
+                    # If no tool calls, use the original response
+                    final_content = response_message.content
+
+                return {
+                    "response": final_content or "I processed your request.",
+                    "tool_calls": tool_call_results
+                }
+
+            except Exception as tool_exception:
+                # If tool calling fails, try without tools (fallback)
+                print(f"Tool calling failed: {str(tool_exception)}, attempting fallback without tools")
+
+                # Simplified system prompt without tool instructions
+                simple_system_prompt = """You are an AI assistant that helps users manage their tasks through natural language.
+                If the user wants to create, view, update, complete, or delete tasks, respond with instructions for the system to handle these operations."""
+
+                simple_messages = [
+                    {"role": "system", "content": simple_system_prompt}
+                ]
+                for msg in conversation_history:
+                    simple_messages.append({"role": msg["role"], "content": msg["content"]})
+                simple_messages.append({"role": "user", "content": message})
+
+                response = self.client.chat.completions.create(
+                    model="gemini-2.5-flash",
+                    messages=simple_messages
+                )
+
+                # Return a simple response indicating that task operations need to be handled separately
+                return {
+                    "response": response.choices[0].message.content or "I processed your request.",
+                    "tool_calls": []
+                }
+
         except Exception as e:
+            # Catch any remaining exceptions
             return {
                 "response": f"Sorry, I encountered an error processing your request: {str(e)}",
                 "tool_calls": []

@@ -132,25 +132,25 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0F172A]">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-[#0F172A] pb-16 md:pb-0">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Dashboard Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 p-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-100 break-words">My Tasks</h1>
             <p className="text-sm sm:text-base text-slate-400 mt-2 leading-relaxed break-words">Manage your tasks efficiently</p>
           </div>
           <button
             onClick={handleCreateTask}
-            className="min-w-[140px] bg-indigo-600 text-white font-extrabold px-6 py-3 rounded-xl shadow-[0_0_20px_rgba(79,70,229,0.4)] transition-all hover:shadow-[0_0_30px_rgba(79,70,229,0.6)] flex items-center justify-center gap-2"
+            className="min-w-[140px] bg-slate-800 text-white font-extrabold px-6 py-3 rounded-xl shadow-lg transition-all hover:bg-slate-700 flex items-center justify-center gap-2"
           >
             <FileText className="h-4 w-4" />
             <span>Create Task</span>
           </button>
         </div>
 
-        {/* Bento Stats Grid - 4-column layout */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-8">
+        {/* Bento Stats Grid - Responsive layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {/* Total Tasks Card */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -213,7 +213,7 @@ export default function DashboardPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="glass-card p-6 mx-8"
+          className="glass-card p-6"
         >
           {/* Desktop Create Task Form */}
           {showCreateForm && (

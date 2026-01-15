@@ -96,7 +96,7 @@ export function LoginForm({ onLoginSuccess, onError, onLogin }: LoginFormProps) 
         )}
 
         <div>
-          <label htmlFor="email" className="block text-sm font-semibold text-slate-500 mb-2">
+          <label htmlFor="email" className="block text-sm font-semibold text-white mb-2">
             Email
           </label>
           <input
@@ -105,7 +105,7 @@ export function LoginForm({ onLoginSuccess, onError, onLogin }: LoginFormProps) 
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full border border-gray-200 rounded-xl px-5 py-4 mb-6 text-lg focus:ring-2 focus:ring-[#0a0a3c] outline-none text-slate-900 !bg-white"
+            className="w-full border border-slate-700 rounded-xl px-5 py-4 mb-6 text-lg focus:ring-2 focus:ring-indigo-500 outline-none text-white bg-slate-900"
             disabled={isLoading}
             placeholder="Email"
             aria-invalid={!!formErrors.email}
@@ -119,7 +119,7 @@ export function LoginForm({ onLoginSuccess, onError, onLogin }: LoginFormProps) 
         </div>
 
         <div>
-          <label htmlFor="password" className="block text-sm font-semibold text-slate-500 mb-2">
+          <label htmlFor="password" className="block text-sm font-semibold text-white mb-2">
             Password
           </label>
           <div className="relative">
@@ -129,7 +129,7 @@ export function LoginForm({ onLoginSuccess, onError, onLogin }: LoginFormProps) 
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full border border-gray-200 rounded-xl px-5 py-4 mb-6 text-lg focus:ring-2 focus:ring-[#0a0a3c] outline-none text-slate-900 !bg-white"
+              className="w-full border border-slate-700 rounded-xl px-5 py-4 mb-6 text-lg focus:ring-2 focus:ring-indigo-500 outline-none text-white bg-slate-900"
               disabled={isLoading}
               placeholder="Password"
               aria-invalid={!!formErrors.password}
@@ -142,9 +142,9 @@ export function LoginForm({ onLoginSuccess, onError, onLogin }: LoginFormProps) 
               aria-label={showPassword ? "Hide password" : "Show password"}
             >
               {showPassword ? (
-                <EyeOffIcon className="h-5 w-5 text-gray-500" />
+                <EyeOffIcon className="h-5 w-5 text-gray-400" />
               ) : (
-                <EyeIcon className="h-5 w-5 text-gray-500" />
+                <EyeIcon className="h-5 w-5 text-gray-400" />
               )}
             </button>
           </div>
@@ -157,7 +157,7 @@ export function LoginForm({ onLoginSuccess, onError, onLogin }: LoginFormProps) 
 
         <button
           type="submit"
-          className="w-full bg-[#0a0a3c] text-white !text-white py-5 rounded-xl text-xl font-bold mt-4 shadow-2xl hover:bg-slate-800 transition-all flex items-center justify-center border-none"
+          className="w-full bg-indigo-600 text-white py-5 rounded-xl text-xl font-bold mt-4 shadow-2xl hover:bg-indigo-700 transition-all flex items-center justify-center border-none"
           disabled={isLoading}
         >
           {isLoading ? 'Logging in...' : 'LOGIN'}
