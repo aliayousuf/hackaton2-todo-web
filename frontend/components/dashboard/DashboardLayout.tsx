@@ -28,17 +28,17 @@ export function DashboardLayout({ stats, children, onCreateTask }: DashboardLayo
         <motion.div
           initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: -20 }}
           animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-          className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8"
+          className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6"
         >
           <div>
             <h1
-              className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white break-words"
+              className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-100 break-words"
               id="dashboard-title"
             >
-              My Tasks
+              Dashboard
             </h1>
             <p
-              className="text-sm sm:text-base text-slate-400 mt-2 leading-relaxed break-words"
+              className="text-base sm:text-lg text-slate-300 mt-2 leading-relaxed break-words"
               id="dashboard-description"
             >
               Manage your tasks efficiently
@@ -48,10 +48,10 @@ export function DashboardLayout({ stats, children, onCreateTask }: DashboardLayo
             whileHover={!prefersReducedMotion ? { scale: 1.05 } : {}}
             whileTap={!prefersReducedMotion ? { scale: 0.95 } : {}}
             onClick={onCreateTask}
-            className="btn-primary min-w-[140px] bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-6 py-3 rounded-xl shadow-lg transition-colors flex items-center justify-center gap-2 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-slate-900"
+            className="btn-primary min-w-[160px] bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white font-bold px-6 py-4 rounded-xl shadow-lg transition-all hover:shadow-xl flex items-center justify-center gap-2 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-slate-900"
             aria-describedby="dashboard-description"
           >
-            <Plus className="h-4 w-4" />
+            <Plus className="h-5 w-5" />
             <span>Create Task</span>
           </motion.button>
         </motion.div>
@@ -68,22 +68,20 @@ export function DashboardLayout({ stats, children, onCreateTask }: DashboardLayo
             initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, scale: 0.9 }}
             animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
             transition={!prefersReducedMotion ? { delay: 0.1 } : {}}
-            className="glass-card p-5 rounded-xl backdrop-blur-md border border-white border-opacity-10 flex flex-col"
+            className="glass-card p-4 rounded-xl backdrop-blur-md border border-slate-700/50 flex flex-col items-center justify-center text-center"
             role="article"
             aria-labelledby="total-tasks-label"
           >
-            <div className="flex items-center gap-3 mb-2">
-              <div className="p-2 bg-indigo-500 bg-opacity-20 rounded-lg">
-                <CheckCircle className="h-5 w-5 text-indigo-400" />
-              </div>
-              <h3
-                className="text-lg font-semibold text-white"
-                id="total-tasks-label"
-              >
-                Total Tasks
-              </h3>
+            <div className="p-3 bg-indigo-500/20 rounded-xl mb-2">
+              <CheckCircle className="h-6 w-6 text-indigo-400" />
             </div>
-            <p className="text-3xl font-bold text-indigo-400" aria-label="Total tasks count">
+            <h3
+              className="text-sm font-medium text-slate-300 mb-1"
+              id="total-tasks-label"
+            >
+              Total
+            </h3>
+            <p className="text-4xl font-bold text-indigo-400" aria-label="Total tasks count">
               {stats.totalTasks}
             </p>
           </motion.div>
@@ -92,22 +90,20 @@ export function DashboardLayout({ stats, children, onCreateTask }: DashboardLayo
             initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, scale: 0.9 }}
             animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
             transition={!prefersReducedMotion ? { delay: 0.2 } : {}}
-            className="glass-card p-5 rounded-xl backdrop-blur-md border border-white border-opacity-10 flex flex-col"
+            className="glass-card p-4 rounded-xl backdrop-blur-md border border-slate-700/50 flex flex-col items-center justify-center text-center"
             role="article"
             aria-labelledby="completed-label"
           >
-            <div className="flex items-center gap-3 mb-2">
-              <div className="p-2 bg-green-500 bg-opacity-20 rounded-lg">
-                <CheckCircle className="h-5 w-5 text-green-400" />
-              </div>
-              <h3
-                className="text-lg font-semibold text-white"
-                id="completed-label"
-              >
-                Completed
-              </h3>
+            <div className="p-3 bg-green-500/20 rounded-xl mb-2">
+              <CheckCircle className="h-6 w-6 text-green-400" />
             </div>
-            <p className="text-3xl font-bold text-green-400" aria-label="Completed tasks count">
+            <h3
+              className="text-sm font-medium text-slate-300 mb-1"
+              id="completed-label"
+            >
+              Completed
+            </h3>
+            <p className="text-4xl font-bold text-green-400" aria-label="Completed tasks count">
               {stats.completedTasks}
             </p>
           </motion.div>
@@ -116,22 +112,20 @@ export function DashboardLayout({ stats, children, onCreateTask }: DashboardLayo
             initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, scale: 0.9 }}
             animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
             transition={!prefersReducedMotion ? { delay: 0.3 } : {}}
-            className="glass-card p-5 rounded-xl backdrop-blur-md border border-white border-opacity-10 flex flex-col"
+            className="glass-card p-4 rounded-xl backdrop-blur-md border border-slate-700/50 flex flex-col items-center justify-center text-center"
             role="article"
             aria-labelledby="overdue-label"
           >
-            <div className="flex items-center gap-3 mb-2">
-              <div className="p-2 bg-yellow-500 bg-opacity-20 rounded-lg">
-                <Calendar className="h-5 w-5 text-yellow-400" />
-              </div>
-              <h3
-                className="text-lg font-semibold text-white"
-                id="overdue-label"
-              >
-                Overdue
-              </h3>
+            <div className="p-3 bg-red-500/20 rounded-xl mb-2">
+              <Calendar className="h-6 w-6 text-red-400" />
             </div>
-            <p className="text-3xl font-bold text-yellow-400" aria-label="Overdue tasks count">
+            <h3
+              className="text-sm font-medium text-slate-300 mb-1"
+              id="overdue-label"
+            >
+              Overdue
+            </h3>
+            <p className="text-4xl font-bold text-red-400" aria-label="Overdue tasks count">
               {stats.overdueTasks}
             </p>
           </motion.div>
@@ -140,22 +134,20 @@ export function DashboardLayout({ stats, children, onCreateTask }: DashboardLayo
             initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, scale: 0.9 }}
             animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
             transition={!prefersReducedMotion ? { delay: 0.4 } : {}}
-            className="glass-card p-5 rounded-xl backdrop-blur-md border border-white border-opacity-10 flex flex-col"
+            className="glass-card p-4 rounded-xl backdrop-blur-md border border-slate-700/50 flex flex-col items-center justify-center text-center"
             role="article"
             aria-labelledby="upcoming-label"
           >
-            <div className="flex items-center gap-3 mb-2">
-              <div className="p-2 bg-blue-500 bg-opacity-20 rounded-lg">
-                <TrendingUp className="h-5 w-5 text-blue-400" />
-              </div>
-              <h3
-                className="text-lg font-semibold text-white"
-                id="upcoming-label"
-              >
-                Upcoming
-              </h3>
+            <div className="p-3 bg-blue-500/20 rounded-xl mb-2">
+              <TrendingUp className="h-6 w-6 text-blue-400" />
             </div>
-            <p className="text-3xl font-bold text-blue-400" aria-label="Upcoming tasks count">
+            <h3
+              className="text-sm font-medium text-slate-300 mb-1"
+              id="upcoming-label"
+            >
+              Upcoming
+            </h3>
+            <p className="text-4xl font-bold text-blue-400" aria-label="Upcoming tasks count">
               {stats.upcomingTasks}
             </p>
           </motion.div>

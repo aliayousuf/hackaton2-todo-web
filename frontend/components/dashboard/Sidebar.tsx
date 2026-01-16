@@ -24,7 +24,7 @@ export function Sidebar() {
   };
 
   return (
-    <aside className="flex flex-col h-full">
+    <aside className="flex flex-col h-full bg-slate-800/30 backdrop-blur-sm border-r border-slate-700/50 p-4">
       <nav className="flex-1 overflow-y-auto">
         {navItems.map((item) => (
           <Link
@@ -32,9 +32,9 @@ export function Sidebar() {
             href={item.href}
             className={`${
               pathname === item.href
-                ? 'bg-indigo-500 text-slate-50'
-                : 'text-slate-400 hover:bg-slate-700 hover:bg-opacity-50'
-            } block px-3 py-2.5 text-sm font-medium rounded-lg transition-colors mb-1`}
+                ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20'
+                : 'text-slate-300 hover:bg-slate-700/60 hover:text-white hover:shadow-md'
+            } block px-4 py-3 text-sm font-semibold rounded-xl transition-all duration-200 mb-2 flex items-center gap-3`}
           >
             {item.name}
           </Link>

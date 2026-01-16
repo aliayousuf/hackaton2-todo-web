@@ -19,7 +19,8 @@ def add_task_tool(user_id: str, title: str, description: str = "") -> Dict[str, 
         Dictionary with success status, task_id, and message
     """
     try:
-        with get_session() as session:
+        from ..database import get_db_session
+        with get_db_session() as session:
             # Validate user_id format
             UUID(user_id)  # This will raise ValueError if invalid
 

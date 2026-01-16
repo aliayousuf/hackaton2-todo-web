@@ -79,7 +79,7 @@ export function EnhancedCreateTaskForm({ onTaskCreated, onError }: EnhancedCreat
         </label>
         <Input
           id="title"
-          className={`input-base w-full bg-slate-700 bg-opacity-50 border border-white border-opacity-20 rounded-lg px-3 py-2 text-white placeholder-slate-400 ${errors.title ? 'border-rose-500' : ''}`}
+          className={`input-base w-full bg-slate-800/50 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-slate-400 ${errors.title ? 'border-rose-500' : ''}`}
           disabled={isLoading}
           placeholder="Enter task title..."
           {...register('title')}
@@ -88,7 +88,7 @@ export function EnhancedCreateTaskForm({ onTaskCreated, onError }: EnhancedCreat
           <motion.p
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
-            className="mt-1 text-sm text-rose-400 break-words"
+            className="mt-2 text-sm text-rose-400 break-words"
           >
             {errors.title.message}
           </motion.p>
@@ -101,7 +101,7 @@ export function EnhancedCreateTaskForm({ onTaskCreated, onError }: EnhancedCreat
         </label>
         <Textarea
           id="description"
-          className={`input-base w-full bg-slate-700 bg-opacity-50 border border-white border-opacity-20 rounded-lg px-3 py-2 text-white placeholder-slate-400 ${errors.description ? 'border-rose-500' : ''}`}
+          className={`input-base w-full bg-slate-800/50 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-slate-400 ${errors.description ? 'border-rose-500' : ''}`}
           disabled={isLoading}
           placeholder="Enter task description..."
           rows={4}
@@ -111,7 +111,7 @@ export function EnhancedCreateTaskForm({ onTaskCreated, onError }: EnhancedCreat
           <motion.p
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
-            className="mt-1 text-sm text-rose-400 break-words"
+            className="mt-2 text-sm text-rose-400 break-words"
           >
             {errors.description.message}
           </motion.p>
@@ -120,19 +120,19 @@ export function EnhancedCreateTaskForm({ onTaskCreated, onError }: EnhancedCreat
 
       <motion.button
         type="submit"
-        className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 px-4 rounded-lg text-sm font-medium transition-colors flex items-center justify-center gap-2"
+        className="w-full bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white py-3 px-4 rounded-lg text-base font-semibold transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
         disabled={isLoading}
         whileHover={{ scale: isLoading ? 1 : 1.02 }}
         whileTap={{ scale: isLoading ? 1 : 0.98 }}
       >
         {isLoading ? (
           <>
-            <Loader2 className="animate-spin h-4 w-4" />
+            <Loader2 className="animate-spin h-5 w-5" />
             <span>Creating task...</span>
           </>
         ) : (
           <>
-            <CheckCircle className="h-4 w-4" />
+            <CheckCircle className="h-5 w-5" />
             <span>Create Task</span>
           </>
         )}

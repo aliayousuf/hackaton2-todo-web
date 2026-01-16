@@ -90,19 +90,19 @@ export default function TasksPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0F172A]">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-[#0F172A] pb-16 md:pb-0">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Tasks Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 p-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-8">
           <div>
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-100 break-words">My Tasks</h1>
-            <p className="text-sm sm:text-base text-slate-400 mt-2 leading-relaxed break-words">Manage your active tasks efficiently</p>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-100 break-words mb-2">My Tasks</h1>
+            <p className="text-base sm:text-lg text-slate-300 leading-relaxed break-words">Manage your active tasks efficiently</p>
           </div>
           <button
             onClick={handleCreateTask}
-            className="min-w-[140px] bg-indigo-600 text-white font-extrabold px-6 py-3 rounded-xl shadow-[0_0_20px_rgba(79,70,229,0.4)] transition-all hover:shadow-[0_0_30px_rgba(79,70,229,0.6)] flex items-center justify-center gap-2"
+            className="min-w-[160px] bg-gradient-to-r from-indigo-600 to-indigo-700 text-white font-bold px-6 py-4 rounded-xl shadow-lg transition-all hover:from-indigo-700 hover:to-indigo-800 hover:shadow-xl flex items-center justify-center gap-2 text-sm"
           >
-            <FileText className="h-4 w-4" />
+            <FileText className="h-5 w-5" />
             <span>Create Task</span>
           </button>
         </div>
@@ -112,12 +112,12 @@ export default function TasksPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="glass-card p-6 mx-8"
+          className="glass-card p-5"
         >
           {/* Desktop Create Task Form */}
           {showCreateForm && (
-            <div className="glass-card mb-6 p-6 sm:p-8">
-              <h2 className="text-xl sm:text-2xl font-semibold text-slate-100 mb-6 break-words">Create New Task</h2>
+            <div className="glass-card mb-6 p-6">
+              <h2 className="text-2xl font-semibold text-slate-100 mb-6 break-words">Create New Task</h2>
               <EnhancedCreateTaskForm
                 onTaskCreated={handleTaskCreated}
                 onError={(error) => {

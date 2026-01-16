@@ -52,7 +52,11 @@ export default function RegisterPage() {
         onRegisterSuccess={handleRegisterSuccess}
         onError={(errorMessage) => setError(errorMessage)}
       />
-      {error && <div className="text-red-500 text-sm text-center mt-4">{error}</div>}
+      {error && (
+        <div className="bg-red-500/10 border border-red-500/30 p-3 rounded-lg text-red-400 text-sm text-center mt-4">
+          {error}
+        </div>
+      )}
     </SplitScreenAuth>
   );
 }

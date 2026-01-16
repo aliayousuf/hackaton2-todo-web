@@ -28,35 +28,34 @@ export default function ResponsiveLayout({ children, title }: ResponsiveLayoutPr
   };
 
   return (
-    <div className="flex min-h-screen bg-slate-900">
-      {/* Fixed Sidebar with hard-coded w-72 and z-index: 50 */}
-      <aside className={`${isMobile ? (sidebarOpen ? 'w-full' : 'w-0') : 'w-72'} fixed left-0 top-0 h-screen z-50 bg-slate-900 overflow-hidden transition-all duration-300`}>
-        <ResponsiveSidebar />
+    <div className="flex h-screen bg-slate-900 overflow-hidden">
+      {/* Sidebar - Fixed width on desktop, overlay on mobile */}
+      <aside className={`${isMobile ? (sidebarOpen ? 'absolute inset-0 z-50' : 'hidden') : 'w-72 flex-shrink-0 h-screen'} ${isMobile ? 'bg-slate-900' : ''}`}>
+        <div className="h-full bg-slate-900">
+          <ResponsiveSidebar />
+        </div>
       </aside>
 
       {/* Mobile Overlay */}
       {isMobile && sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          className="fixed inset-0 bg-black/50 z-40"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
-      {/* Main Content with mandatory ml-72 - creates physical wall */}
-      <main
-        className={`${isMobile ? 'ml-0' : 'ml-72'} flex-1 transition-all duration-300`}
-        style={isMobile ? {} : { width: 'calc(100% - 18rem)' }}
-      >
-        {/* Desktop Header with padding to prevent navbar overlap */}
+      {/* Main Content - Use flexbox to properly position content and prevent overlap */}
+      <main className="flex-1 flex flex-col overflow-hidden">
+        {/* Desktop Header */}
         {!isMobile && title && (
-          <header className="sticky top-0 z-30 bg-slate-900/80 backdrop-blur-md border-b border-white/10 p-10">
+          <header className="bg-slate-900/80 backdrop-blur-md border-b border-white/10 p-6 flex-shrink-0">
             <h1 className="text-2xl font-semibold text-slate-50">{title}</h1>
           </header>
         )}
 
         {/* Mobile Header */}
         {isMobile && (
-          <header className="sticky top-0 z-30 bg-slate-900/80 backdrop-blur-md border-b border-white/10 p-4">
+          <header className="bg-slate-900/80 backdrop-blur-md border-b border-white/10 p-4 sticky top-0 z-30 flex-shrink-0">
             <div className="flex items-center justify-between">
               <button
                 onClick={toggleSidebar}
@@ -73,8 +72,8 @@ export default function ResponsiveLayout({ children, title }: ResponsiveLayoutPr
           </header>
         )}
 
-        {/* Main content with top padding to push titles below edge */}
-        <div className="p-4 pt-20">
+        {/* Main content area - Scrollable to prevent overlap */}
+        <div className="flex-1 overflow-y-auto p-4 md:p-6">
           {children}
         </div>
       </main>

@@ -17,13 +17,14 @@ def delete_task_tool(user_id: str, task_id: str) -> Dict[str, Any]:
         Dictionary with success status and message
     """
     try:
-        # Validate user_id and task_id
+        from ..database import get_db_session
+        # Validate user_id (which is UUID) but convert task_id to int
         UUID(user_id)
-        UUID(task_id)
+        task_id_int = int(task_id)
 
-        with get_session() as session:
+        with get_db_session() as session:
             # Find the task that belongs to the user
-            statement = select(Task).where(Task.id == task_id, Task.user_id == user_id)
+            statement = select(Task).where(Task.id == task_id_int, Task.user_id == user_id)
             task = session.exec(statement).first()
 
             if not task:

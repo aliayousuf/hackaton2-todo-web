@@ -132,37 +132,37 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0F172A]">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-[#0F172A] pb-16 md:pb-0">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Dashboard Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 p-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-8">
           <div>
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-100 break-words">My Tasks</h1>
-            <p className="text-sm sm:text-base text-slate-400 mt-2 leading-relaxed break-words">Manage your tasks efficiently</p>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-100 break-words mb-2">Dashboard</h1>
+            <p className="text-base sm:text-lg text-slate-300 leading-relaxed break-words">Manage your tasks efficiently</p>
           </div>
           <button
             onClick={handleCreateTask}
-            className="min-w-[140px] bg-indigo-600 text-white font-extrabold px-6 py-3 rounded-xl shadow-[0_0_20px_rgba(79,70,229,0.4)] transition-all hover:shadow-[0_0_30px_rgba(79,70,229,0.6)] flex items-center justify-center gap-2"
+            className="min-w-[160px] bg-gradient-to-r from-indigo-600 to-indigo-700 text-white font-bold px-6 py-4 rounded-xl shadow-lg transition-all hover:from-indigo-700 hover:to-indigo-800 hover:shadow-xl flex items-center justify-center gap-2 text-sm"
           >
-            <FileText className="h-4 w-4" />
+            <FileText className="h-5 w-5 text-white" />
             <span>Create Task</span>
           </button>
         </div>
 
-        {/* Bento Stats Grid - 4-column layout */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-8">
+        {/* Bento Stats Grid - Responsive layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
           {/* Total Tasks Card */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.1 }}
-            className="glass-card p-6 flex flex-col items-center justify-center text-center"
+            className="glass-card p-5 flex flex-col items-center justify-center text-center"
           >
-            <div className="p-3 bg-indigo-500 bg-opacity-20 rounded-xl mb-3">
-              <FileText className="h-6 w-6 text-indigo-400" />
+            <div className="p-4 bg-indigo-500/20 rounded-2xl mb-3">
+              <FileText className="h-7 w-7 text-indigo-300" />
             </div>
-            <h3 className="text-base font-medium text-slate-400 mb-2">Total</h3>
-            <p className="text-3xl font-bold text-indigo-400">{stats.totalTasks}</p>
+            <h3 className="text-sm font-medium text-slate-300 mb-1">Total</h3>
+            <p className="text-4xl font-bold text-indigo-400">{stats.totalTasks}</p>
           </motion.div>
 
           {/* Completed Tasks Card */}
@@ -170,13 +170,13 @@ export default function DashboardPage() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
-            className="glass-card p-6 flex flex-col items-center justify-center text-center"
+            className="glass-card p-5 flex flex-col items-center justify-center text-center"
           >
-            <div className="p-3 bg-green-500 bg-opacity-20 rounded-xl mb-3">
-              <CheckCircle className="h-6 w-6 text-green-400" />
+            <div className="p-4 bg-green-500/20 rounded-2xl mb-3">
+              <CheckCircle className="h-7 w-7 text-green-300" />
             </div>
-            <h3 className="text-base font-medium text-slate-400 mb-2">Completed</h3>
-            <p className="text-3xl font-bold text-green-400">{stats.completedTasks}</p>
+            <h3 className="text-sm font-medium text-slate-300 mb-1">Completed</h3>
+            <p className="text-4xl font-bold text-green-400">{stats.completedTasks}</p>
           </motion.div>
 
           {/* Overdue Tasks Card */}
@@ -184,13 +184,13 @@ export default function DashboardPage() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3 }}
-            className="glass-card p-6 flex flex-col items-center justify-center text-center"
+            className="glass-card p-5 flex flex-col items-center justify-center text-center"
           >
-            <div className="p-3 bg-red-500 bg-opacity-20 rounded-xl mb-3">
-              <Calendar className="h-6 w-6 text-red-400" />
+            <div className="p-4 bg-red-500/20 rounded-2xl mb-3">
+              <Calendar className="h-7 w-7 text-red-300" />
             </div>
-            <h3 className="text-base font-medium text-slate-400 mb-2">Overdue</h3>
-            <p className="text-3xl font-bold text-red-400">{stats.overdueTasks}</p>
+            <h3 className="text-sm font-medium text-slate-300 mb-1">Overdue</h3>
+            <p className="text-4xl font-bold text-red-400">{stats.overdueTasks}</p>
           </motion.div>
 
           {/* Upcoming Tasks Card */}
@@ -198,13 +198,13 @@ export default function DashboardPage() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.4 }}
-            className="glass-card p-6 flex flex-col items-center justify-center text-center"
+            className="glass-card p-5 flex flex-col items-center justify-center text-center"
           >
-            <div className="p-3 bg-blue-500 bg-opacity-20 rounded-xl mb-3">
-              <TrendingUp className="h-6 w-6 text-blue-400" />
+            <div className="p-4 bg-blue-500/20 rounded-2xl mb-3">
+              <TrendingUp className="h-7 w-7 text-blue-300" />
             </div>
-            <h3 className="text-base font-medium text-slate-400 mb-2">Upcoming</h3>
-            <p className="text-3xl font-bold text-blue-400">{stats.upcomingTasks}</p>
+            <h3 className="text-sm font-medium text-slate-300 mb-1">Upcoming</h3>
+            <p className="text-4xl font-bold text-blue-400">{stats.upcomingTasks}</p>
           </motion.div>
         </div>
 
@@ -213,12 +213,12 @@ export default function DashboardPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="glass-card p-6 mx-8"
+          className="glass-card p-5"
         >
           {/* Desktop Create Task Form */}
           {showCreateForm && (
-            <div className="glass-card mb-6 p-6 sm:p-8">
-              <h2 className="text-xl sm:text-2xl font-semibold text-slate-100 mb-6 break-words">Create New Task</h2>
+            <div className="glass-card mb-6 p-6">
+              <h2 className="text-2xl font-semibold text-slate-100 mb-6 break-words">Create New Task</h2>
               <EnhancedCreateTaskForm
                 onTaskCreated={handleTaskCreated}
                 onError={(error) => {

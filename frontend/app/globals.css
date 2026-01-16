@@ -18,25 +18,27 @@
 }
 
 body {
-  background-color: #0F172A;
+  background-color: #020617 !important;
+  color: white !important;
   overflow-x: hidden;
 }
 
 html, body {
   margin: 0;
   padding: 0;
-  color: rgb(var(--foreground-rgb));
-  background-color: #0F172A !important; /* Midnight background */
+  color: white !important;
+  background-color: #020617 !important; /* Darker background */
   font-family: 'Inter', system-ui, sans-serif;
+  height: 100%;
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(30, 41, 59, 0.6); /* More opaque background for better contrast */
   backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15); /* Slightly stronger border */
   border-radius: 1rem;
   padding: 1.5rem;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
   transition: all 300ms ease;
 }
 
@@ -65,7 +67,7 @@ html, body {
 
 /* Ensure all text defaults to proper contrast */
 * {
-  color: #ffffff; /* primary text to #FFFFFF */
+  color: #e2e8f0; /* Use brighter slate-200 as default */
 }
 
 /* Text contrast fixes */
@@ -74,7 +76,7 @@ h1, h2, h3, h4, .text-title {
 }
 
 .text-subtitle, .subtitle, small, .text-muted, p {
-  color: #94a3b8 !important; /* text-slate-400 */
+  color: #cbd5e1 !important; /* text-slate-300 - brighter than slate-400 */
 }
 
 /* Override for specific elements that need different colors */
@@ -88,6 +90,23 @@ h1, h2, h3, h4, .text-title {
 
 .text-muted {
   color: #94a3b8; /* slate-400 */
+}
+
+/* Specific overrides for better contrast */
+.glass-card * {
+  color: #e2e8f0 !important;
+}
+
+.glass-card h1, .glass-card h2, .glass-card h3, .glass-card h4 {
+  color: #ffffff !important;
+}
+
+.glass-card p, .glass-card span, .glass-card div {
+  color: #e2e8f0 !important;
+}
+
+.glass-card .text-muted, .glass-card .subtitle {
+  color: #94a3b8 !important;
 }
 
 /* Focus styles for accessibility */
