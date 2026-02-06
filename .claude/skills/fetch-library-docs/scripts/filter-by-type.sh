@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # Filter content by type(s) - Main orchestrator
 # Usage: filter-by-type.sh <content_types> <max_items> < raw_input

@@ -1,4 +1,3 @@
-
 # Usage Patterns
 
 Real-world examples for common scenarios.

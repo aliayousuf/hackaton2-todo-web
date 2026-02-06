@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: todo-app-config
+data:
+  NEXT_PUBLIC_API_URL: "http://todo-backend:7860"
+  DATABASE_URL: "postgresql://neondb_owner:npg_HmIjBAZ5erM2@ep-crimson-heart-adq9x38j-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
+  PYTHONPATH: "/app/src"
+  JWT_SECRET: "f1Ro4zE7n9Sh5U0lDERaD7!HE92SIe2C"
+  JWT_ALGORITHM: "HS256"
+  JWT_ACCESS_TOKEN_EXPIRE_MINUTES: "10080"
+  BCRYPT_ROUNDS: "12"
+  LOG_LEVEL: "INFO"
+  ENVIRONMENT: "development"
+  GOOGLE_API_KEY: "AIzaSyBF6T7eKfZ-pUBKM-HYu8q-n7I5cPlF-A8"

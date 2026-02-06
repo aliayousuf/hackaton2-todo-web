@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # Start Context7 MCP server for fetch-library-docs skill
 # Usage: ./start-server.sh [port]

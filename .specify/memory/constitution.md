@@ -1,13 +1,20 @@
 <!-- SYNC IMPACT REPORT
-Version change: N/A (initial version) → 1.0.0
-Modified principles: N/A
-Added sections: All sections from The Evolution of Todo constitution
+Version change: 1.0.0 → 1.1.0
+Modified principles:
+- Added Phase IV Cloud-Native Standards section under III. Technology Governance
+- Updated repository structure to include Phase IV k8s folder structure
+- Added Infrastructure Spec-Driven Development section
+Added sections:
+- III. Technology Governance - Phase IV Cloud-Native Standards
+- IV. Repository Structure - Phase IV directory layout
+- VII. Phase Evolution Rules - Transition from Phase III to Phase IV confirmation
+- VIII. Workflow Enforcement - Infrastructure Spec-Driven Development subsection
 Removed sections: N/A
 Templates requiring updates:
-- .specify/templates/plan-template.md: ✅ updated
-- .specify/templates/spec-template.md: ✅ updated
-- .specify/templates/tasks-template.md: ✅ updated
-- .specify/templates/commands/*.md: ✅ updated
+- .specify/templates/plan-template.md: ⚠ pending
+- .specify/templates/spec-template.md: ⚠ pending
+- .specify/templates/tasks-template.md: ⚠ pending
+- .specify/templates/commands/*.md: ⚠ pending
 Follow-up TODOs: None
 -->
 
@@ -359,6 +366,38 @@ Mutable infrastructure
 
 Unversioned Docker images (no latest tag)
 
+Phase IV Cloud-Native Standards
+
+Requirements:
+
+Docker Desktop and Minikube mandated for local orchestration
+
+Containerization using Docker AI (Gordon) or Claude-generated Dockerfiles
+
+Helm Charts mandated for all Kubernetes deployments
+
+kubectl-ai and Kagent integrated for AIOps principles in cluster operations and troubleshooting
+
+12-Factor App principles enforced for all containerized workloads
+
+AI Agent Responsibilities:
+
+Docker AI (Gordon): Containerization, Dockerfile generation, image optimization
+
+kubectl-ai: Kubernetes object generation, scaling, diagnostics
+
+Kagent: Cluster analysis, optimization, AIOps insights
+
+Claude Code: Specification interpretation, Helm chart generation, orchestration
+
+Forbidden:
+
+Manual Dockerfile or Kubernetes YAML creation by humans
+
+Imperative kubectl commands used as implementation artifacts
+
+Infrastructure changes without specs
+
 Technology Stack (By Phase)
 Phase I
 
@@ -402,6 +441,8 @@ Phase IV
 
 Docker
 
+Docker AI (Gordon)
+
 Minikube
 
 Helm
@@ -409,6 +450,8 @@ Helm
 kubectl-ai, kagent
 
 Local Kubernetes deployment
+
+Spec-Driven Infrastructure (SDI)
 
 Phase V
 
@@ -514,7 +557,44 @@ Phase II Structure (Full-Stack Monorepo - MANDATORY):
 ├── .gitignore
 ├── README.md                         # Project overview and setup
 └── CLAUDE.md                         # Root AI agent instructions
-Enforcement: No alternative structures permitted. All new phases must follow this layout.V. Quality Standards (Global)
+Enforcement: No alternative structures permitted. All new phases must follow this layout.
+
+Phase IV Structure (Cloud-Native - MANDATORY):
+/
+├── k8s/                              # Kubernetes configurations
+│   ├── charts/                       # Helm charts for deployment
+│   │   ├── todo-frontend/            # Frontend Helm chart
+│   │   │   ├── Chart.yaml           # Helm chart metadata
+│   │   │   ├── values.yaml          # Default configuration values
+│   │   │   └── templates/           # Kubernetes manifest templates
+│   │   └── todo-backend/            # Backend Helm chart
+│   │       ├── Chart.yaml           # Helm chart metadata
+│   │       ├── values.yaml          # Default configuration values
+│   │       └── templates/           # Kubernetes manifest templates
+│   ├── manifests/                    # Static Kubernetes YAML manifests (for reference)
+│   │   ├── deployment.yaml          # Deployment configurations
+│   │   ├── service.yaml             # Service configurations
+│   │   ├── ingress.yaml             # Ingress configurations
+│   │   └── configmap.yaml           # ConfigMap configurations
+│   └── scripts/                      # Deployment automation scripts
+│       ├── deploy.sh                # Deployment script
+│       ├── rollback.sh              # Rollback script
+│       └── health-check.sh          # Health check script
+├── docker/                           # Docker configurations and Docker AI (Gordon) settings
+│   ├── Dockerfile.frontend          # Frontend Dockerfile (AI-generated)
+│   ├── Dockerfile.backend           # Backend Dockerfile (AI-generated)
+│   ├── docker-compose.k8s.yml       # Kubernetes-specific compose file
+│   └── gordon-config.yaml           # Docker AI (Gordon) configuration
+├── frontend/                         # Next.js App (as in Phase II)
+├── backend/                          # FastAPI App (as in Phase II)
+├── .specify/                         # SDD templates and scripts (as in Phase II)
+├── specs/                            # Feature specifications (as in Phase II)
+├── history/                          # ADRs and PHRs (as in Phase II)
+└── README.md                         # Project overview and setup
+
+Enforcement: No alternative structures permitted. Phase IV deployments must follow this layout.
+
+V. Quality Standards (Global)
 
 Specification quality: clear problem statement, user stories, edge cases, performance, security, success metrics
 
@@ -548,6 +628,16 @@ Phase IV: Cloud-Native Distributed
 
 Phase V: Enterprise Features
 
+Phase IV Transition Logic:
+
+The transition from Phase III (AI-Powered) to Phase IV (Cloud-Native) preserves all existing Todo Chatbot logic within containerized environments.
+
+The AI agent functionality developed in Phase III must be maintained within the containerized architecture.
+
+All existing API contracts, data models, and business logic from Phases I-III must continue to function identically when deployed to Kubernetes.
+
+Containerization must not alter the behavior of the Todo Chatbot logic - only the deployment mechanism changes.
+
 VIII. Workflow Enforcement
 
 SDD Workflow: Constitution → Specify → Plan → Tasks → Implement → Record
@@ -555,6 +645,14 @@ SDD Workflow: Constitution → Specify → Plan → Tasks → Implement → Reco
 ADR creation rules: impact, alternatives, scope (all three must be yes)
 
 Violations invalidate the work
+
+Infrastructure Spec-Driven Development:
+
+Infrastructure (K8s/Docker) must follow the same Spec → Plan → Task → Implement flow as application code.
+
+AI Agent "Blueprints" are used to generate Docker configurations, Helm charts, and Kubernetes resources from structured infrastructure specifications.
+
+This ensures the same governance, traceability, and quality standards apply to infrastructure as to application code.
 
 IX. Human-AI Collaboration Contract
 
@@ -604,4 +702,4 @@ Interpretation: guided by SDD and human-AI collaboration principles
 
 Non-compliance: work violating the Constitution must be rejected and regenerated
 
-**Version**: 1.0.0 | **Ratified**: 2026-01-03 | **Last Amended**: 2026-01-03
+**Version**: 1.1.0 | **Ratified**: 2026-01-03 | **Last Amended**: 2026-02-02

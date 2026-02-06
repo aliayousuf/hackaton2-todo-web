@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # Load Context7 API key from multiple sources (hybrid approach)
 #

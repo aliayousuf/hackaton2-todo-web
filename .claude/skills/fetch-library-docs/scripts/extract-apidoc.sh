@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # Extract APIDOC blocks from documentation
 # APIDOC blocks contain structured API documentation with parameters, descriptions

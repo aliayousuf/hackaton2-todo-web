@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # Interactive setup script for Context7 API key
 #

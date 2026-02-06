@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # Extract terminal/bash code blocks for setup and installation
 # Targets: ```bash, ```terminal, ```shell, ```sh, ```zsh

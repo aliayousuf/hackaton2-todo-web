@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # Extract code blocks from documentation text
 # Uses awk for maximum efficiency (0 LLM tokens!)

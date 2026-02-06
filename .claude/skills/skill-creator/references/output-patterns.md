@@ -1,4 +1,3 @@
-
 # Output Patterns
 
 Use these patterns when skills need to produce consistent, high-quality output.

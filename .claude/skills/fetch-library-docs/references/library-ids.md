@@ -1,4 +1,3 @@
-
 # Common Library IDs
 
 Use `--library-id` instead of `--library` to save 1 API call.

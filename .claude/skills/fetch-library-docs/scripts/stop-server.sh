@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # Stop Context7 MCP server
 # Usage: ./stop-server.sh [port]

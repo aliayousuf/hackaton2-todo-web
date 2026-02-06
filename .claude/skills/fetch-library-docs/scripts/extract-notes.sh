@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # Extract important notes and warnings using grep
 # Filters for key informational content

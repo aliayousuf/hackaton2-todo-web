@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # Extract API signatures using awk
 # Finds function declarations, interfaces, types

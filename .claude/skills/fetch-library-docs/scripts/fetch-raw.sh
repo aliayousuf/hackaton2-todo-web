@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # Fetch raw documentation from Context7 MCP
 # Output: JSON response (stays in shell, doesn't enter Claude context)

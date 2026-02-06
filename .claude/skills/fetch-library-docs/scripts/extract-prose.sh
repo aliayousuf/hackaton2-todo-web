@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # Extract conceptual prose (paragraphs without code)
 # Filters out code blocks and extracts meaningful explanatory text

@@ -1,0 +1,51 @@
+# Production Multi-Stage Dockerfile Template
+#syntax=docker/dockerfile:1
+
+# === Build stage: Install dependencies and create virtual environment ===
+FROM python:3.11-slim AS builder
+
+ENV LANG=C.UTF-8
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV PATH="/app/venv/bin:$PATH"
+
+WORKDIR /app
+
+RUN python -m venv /app/venv
+COPY requirements.txt .
+
+# Install system dependencies if needed
+# RUN apt-get update && apt-get install -y gcc && rm -rf /var/lib/apt/lists/*
+
+RUN pip install --no-cache-dir -r requirements.txt && \
+    pip install gunicorn uvicorn[standard]
+
+# === Final stage: Create minimal runtime image ===
+FROM python:3.11-slim
+
+WORKDIR /app
+
+ENV PYTHONUNBUFFERED=1
+ENV PATH="/app/venv/bin:$PATH"
+
+# Create non-root user for security
+RUN groupadd -g 1001 -S fastapi && \
+    adduser -S fastapi -u 1001 -G fastapi && \
+    chown -R fastapi:fastapi /app
+
+COPY app.py ./
+COPY --from=builder /app/venv /app/venv
+
+# Switch to non-root user
+USER fastapi
+
+EXPOSE 8000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8000/health || exit 1
+
+ENTRYPOINT ["gunicorn", "--worker-class", "uvicorn.workers.UvicornWorker", \
+    "--workers", "4", "--worker-connections", "1000", \
+    "--max-requests", "1000", "--max-requests-jitter", "100", \
+    "--bind", "0.0.0.0:8000", "app:app"]

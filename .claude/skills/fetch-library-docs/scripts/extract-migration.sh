@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # Extract migration-related content (before/after, breaking changes, upgrades)
 # Targets: // Before, // After, Breaking change, migration, upgrade patterns

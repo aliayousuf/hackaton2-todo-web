@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # Cross-platform Python detection
 # Returns the correct Python command for the current system

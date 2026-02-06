@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # Main orchestrator: Token-efficient documentation fetcher
 #

@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # Extract best practices and design patterns content
 # Targets: best practice, pattern, recommended, should, avoid, prefer patterns

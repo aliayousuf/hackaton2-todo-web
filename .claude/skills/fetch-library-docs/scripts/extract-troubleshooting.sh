@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # Extract troubleshooting content (workarounds, debugging, errors, warnings)
 # Targets: workaround, temporary, warning, error, fix, debug, issue patterns
