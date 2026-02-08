@@ -87,11 +87,11 @@ affinity: {}
 
 # Configuration for the todo app
 config:
-  database_url: "postgresql://neondb_owner:npg_HmIjBAZ5erM2@ep-crimson-heart-adq9x38j-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
-  jwt_secret: "f1Ro4zE7n9Sh5U0lDERaD7!HE92SIe2C"
+  database_url: "DATABASE_URL"
+  jwt_secret: "JWT_SECRET"
   jwt_algorithm: "HS256"
   jwt_access_token_expire_minutes: "10080"
   bcrypt_rounds: "12"
   log_level: "INFO"
   environment: "development"
-  google_api_key: "AIzaSyBF6T7eKfZ-pUBKM-HYu8q-n7I5cPlF-A8"
+  google_api_key: "GOOGLE_API_KEY"

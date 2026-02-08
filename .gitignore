@@ -17,6 +17,7 @@ venv.bak/
 .venv/
 venv/
 env/
+.env/
 
 # Testing
 .coverage
